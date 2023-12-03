@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign-up Page</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(to right, #ff758c, #ff7eb3);
+            font-family: 'Montserrat', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        form {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            width: 40%;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            margin-top: 20px;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 2em;
+        }
+        input {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 20px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: border-color 0.3s ease;
+        }
+        input:focus {
+            border-color: #ff758c;
+        }
+        input[type="submit"] {
+            background-color: #4caf50;
+            color: white;
+            padding: 12px 15px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.3s ease;
+        }
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        .form-group {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-gap: 15px;
+        }
+        .logo {
+            width: 100%;
+            max-width: 400px; /* Adjust the size as needed */
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <form method="post" action="/signup">
+        <img src="../static/pic.png" alt="Logo" class="logo">
+            <h3>‎ </h3>
+        <h1>Sign-up</h1>
+        <h3>‎ </h3>
+        <div class="form-group">
+            <div>
+                <input type="text" name="username" id="username" placeholder="Username" required>
+            </div>
+            <div>
+                <input type="password" name="password" id="password" placeholder="Password" required>
+            </div>
+            <div>
+                <input type="date" name="last_period_date" id="last_period_date" placeholder="Last Period Date" required>
+            </div>
+            <div>
+                <input type="number" name="weight" id="weight" step="0.1" placeholder="Weight (kg)" required>
+            </div>
+            <div>
+                <input type="number" name="height" id="height" placeholder="Height (cm)" required>
+            </div>
+            <div>
+                <input type="text" name="blood_pressure" id="blood_pressure" placeholder="Blood Pressure" required>
+            </div>
+            <div>
+                <input type="number" name="heart_rate" id="heart_rate" placeholder="Heart Rate (bpm)" required>
+            </div>
+            <div>
+                <input type="number" name="body_temperature" id="body_temperature" step="0.1" placeholder="Body Temperature (°C)" required>
+            </div>
+            <div>
+                <input type="number" name="sleep_duration_hours" id="sleep_duration_hours" step="0.1" placeholder="Sleep Duration (hours)" required>
+            </div>
+            <div>
+                <input type="number" name="stress_level" id="stress_level" placeholder="Stress Level" required>
+            </div>
+            <div>
+                <input type="number" name="exercise_minutes" id="exercise_minutes" placeholder="Exercise Minutes" required>
+            </div>
+            <div>
+                <input type="number" name="caloric_intake_kcal" id="caloric_intake_kcal" placeholder="Caloric Intake (kcal)" required>
+            </div>
+        </div>
+        <input type="submit" value="Sign Up">
+    </form>
+</body>
+</html>

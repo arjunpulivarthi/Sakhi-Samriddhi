@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Recipe Search</title>
+    <style>
+        body {
+            background-color: #000;
+            color: #FFC0CB; /* Pink text */
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            background-color: #FFC0CB; /* Pink background */
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px auto;
+            max-width: 800px;
+        }
+
+        .input-group {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .search-input {
+            width: 70%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            outline: none;
+        }
+
+        .search-button {
+            width: 25%;
+            background-color: #000;
+            color: #FFC0CB; /* Pink button text */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .keywords-container {
+            margin-top: 20px;
+        }
+
+        .keywords-button {
+            background-color: #000;
+            color: #FFC0CB; /* Pink button text */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            padding: 5px 10px;
+            margin-right: 10px;
+        }
+
+        .carousel {
+            display: flex;
+            flex-wrap: nowrap;
+            overflow-x: auto;
+        }
+
+        .recipe-card {
+            flex: 0 0 auto;
+            margin-right: 10px;
+            scroll-snap-align: start;
+            border: 1px solid #FFC0CB; /* Pink border */
+            border-radius: 10px;
+            max-width: 300px;
+            padding: 10px;
+        }
+
+        .recipe-title {
+            font-size: 18px;
+            color: #000000;
+        }
+
+        .recipe-image {
+            max-width: 100%;
+        }
+
+        .recipe-details {
+            margin-top: 10px;
+        }
+
+        .recipe-details a {
+            color: #000;
+        }
+
+        .recipe-tags {
+            display: flex;
+            justify-content: space-between;
+            font-style: italic;
+        }
+
+        .recipe-tag {
+            border: 1px solid #FFC0CB;
+            border-radius: 10px;
+            padding: 2px 5px;
+            margin: 2px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Recipe Search</h2>
+        <div class="input-group">
+            <input type="text" class="search-input" id="keywords" placeholder="Enter keywords">
+            <button class="search-button" id="search">Search</button>
+        </div>
+        <div class="keywords-container">
+            <button class="keywords-button" id="popularKeyword1">Protein Rich</button>
+            <button class="keywords-button" id="popularKeyword2">Fiber Rich</button>
+            <button class="keywords-button" id="popularKeyword3">Healthy</button>
+            <button class="keywords-button" id="popularKeyword4">Vegan</button>
+        </div>
+        <div class="carousel" id="carousel"></div>
+    </div>
+
+    <script>
+        const searchButton = document.getElementById("search");
+        const keywordsInput = document.getElementById("keywords");
+        const carousel = document.getElementById("carousel");
+
+        searchButton.addEventListener("click", () => {
+            const keywords = keywordsInput.value.trim();
+            if (keywords !== "") {
+                searchRecipes(keywords);
+            }
+        });
+
+        const popularKeywords = ["Protein Rich", "Fiber Rich", "Healthy", "Vegan"];
+
+        popularKeywords.forEach((keyword, index) => {
+            const keywordButton = document.getElementById(`popularKeyword${index + 1}`);
+            keywordButton.addEventListener("click", () => {
+                keywordsInput.value = keyword;
+                searchRecipes(keyword);
+            });
+        });
+
+        function searchRecipes(keywords) {
+            carousel.innerHTML = "Searching for recipes...";
+
+            // Perform the complex search by making an API request
+            const url = `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/complexSearch?query=${keywords}&number=10`;
+
+            const headers = {
+                "X-Rapidapi-Key": "cacaac5b8fmsh4ba079d838f6e8bp1e632ajsnd8748447633a",
+                "X-Rapidapi-Host": "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com"
+            };
+
+            fetch(url, { headers })
+                .then(response => response.json())
+                .then(data => {
+                    displayRecipes(data.results);
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                    carousel.innerHTML = "An error occurred while fetching recipes.";
+                });
+        }
+
+        function displayRecipes(recipes) {
+            carousel.innerHTML = "";
+
+            if (recipes.length === 0) {
+                carousel.innerHTML = "No recipes found.";
+            } else {
+                recipes.forEach(recipe => {
+                    const recipeCard = document.createElement("div");
+                    recipeCard.classList.add("recipe-card");
+
+                    if (recipe.title) {
+                        const recipeTitle = document.createElement("h3");
+                        recipeTitle.classList.add("recipe-title");
+                        const titleLink = document.createElement("a");
+                        titleLink.href = recipe.sourceUrl;
+                        titleLink.textContent = recipe.title;
+                        recipeTitle.appendChild(titleLink);
+                        recipeCard.appendChild(recipeTitle);
+                    }
+
+                    if (recipe.image) {
+                        const recipeImage = document.createElement("img");
+                        recipeImage.classList.add("recipe-image");
+                        const imageLink = document.createElement("a");
+                        imageLink.href = recipe.sourceUrl;
+                        imageLink.appendChild(recipeImage);
+                        recipeImage.src = recipe.image;
+                        recipeCard.appendChild(imageLink);
+                    }
+
+                    const recipeDetails = document.createElement("div");
+                    recipeDetails.classList.add("recipe-details");
+
+                    if (recipe.sourceUrl) {
+                        const recipeLink = document.createElement("a");
+                        recipeLink.href = recipe.sourceUrl;
+                        recipeLink.textContent = "Recipe Link";
+                        recipeDetails.appendChild(recipeLink);
+                    }
+
+                    carousel.appendChild(recipeCard);
+                });
+            }
+        }
+    </script>
+</body>
+</html>

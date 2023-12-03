@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Run Script and Download Model</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Run Script and Download Model</h1>
+
+    <button id="runScript">Run Script</button>
+    <div id="output"></div>
+
+    <p>Download the model: <a href="/download_model">Download Model</a></p>
+
+    <script>
+        $(document).ready(function () {
+            $('#runScript').click(function () {
+                $('#output').empty();
+                $.get('/run_script', function (data) {
+                    $('#output').text(data);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

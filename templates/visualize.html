@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Menstrual Data Visualization</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.15/dist/tailwind.min.css">
+</head>
+<body class="{{ 'dark' if dark_mode == 'dark' else '' }}">
+
+<div class="container mx-auto mt-8">
+    <h1 class="text-3xl font-semibold mb-4">Menstrual Data</h1>
+
+    <label class="flex items-center space-x-2 mb-4">
+        <span>Toggle Dark Mode</span>
+        <input type="checkbox" id="dark_mode_toggle" {{ 'checked' if dark_mode == 'dark' else '' }}>
+    </label>
+
+    <table class="w-full border-collapse border border-gray-300">
+        <thead>
+            <tr>
+                <th class="border border-gray-300 py-2 px-4 bg-gray-100">Username</th>
+                <th class="border border-gray-300 py-2 px-4 bg-gray-100">Last Period Date</th>
+                <th class="border border-gray-300 py-2 px-4 bg-gray-100">Weight</th>
+                <th class="border border-gray-300 py-2 px-4 bg-gray-100">Height</th>
+                <th class="border border-gray-300 py-2 px-4 bg-gray-100">Blood Pressure</th>
+                <th class="border border-gray-300 py-2 px-4 bg-gray-100">Heart Rate</th>
+                <th class="border border-gray-300 py-2 px-4 bg-gray-100">Body Temperature</th>
+                <th class="border border-gray-300 py-2 px-4 bg-gray-100">Sleep Duration (hours)</th>
+                <th class="border border-gray-300 py-2 px-4 bg-gray-100">Stress Level</th>
+                <th class="border border-gray-300 py-2 px-4 bg-gray-100">Exercise Minutes</th>
+                <th class="border border-gray-300 py-2 px-4 bg-gray-100">Water Intake (ml)</th>
+                <th class="border border-gray-300 py-2 px-4 bg-gray-100">Caloric Intake (kcal)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for girl in data %}
+                <tr>
+                    <td class="border border-gray-300 py-2 px-4">{{ girl.username }}</td>
+                    <td class="border border-gray-300 py-2 px-4">{{ girl.last_period_date }}</td>
+                    <td class="border border-gray-300 py-2 px-4">{{ girl.health_stats.weight }}</td>
+                    <td class="border border-gray-300 py-2 px-4">{{ girl.health_stats.height }}</td>
+                    <td class="border border-gray-300 py-2 px-4">{{ girl.health_stats.blood_pressure }}</td>
+                    <td class="border border-gray-300 py-2 px-4">{{ girl.health_stats.heart_rate }}</td>
+                    <td class="border border-gray-300 py-2 px-4">{{ girl.health_stats.body_temperature }}</td>
+                    <td class="border border-gray-300 py-2 px-4">{{ girl.health_stats.sleep_duration_hours }}</td>
+                    <td class="border border-gray-300 py-2 px-4">{{ girl.health_stats.stress_level }}</td>
+                    <td class="border border-gray-300 py-2 px-4">{{ girl.health_stats.exercise_minutes }}</td>
+                    <td class="border border-gray-300 py-2 px-4">{{ girl.health_stats.water_intake_ml }}</td>
+                    <td class="border border-gray-300 py-2 px-4">{{ girl.health_stats.caloric_intake_kcal }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<script>
+    const darkModeToggle = document.getElementById('dark_mode_toggle');
+    darkModeToggle.addEventListener('change', () => {
+        if (darkModeToggle.checked) {
+            window.location.href = '/visualize?dark_mode=dark';
+        } else {
+            window.location.href = '/visualize?dark_mode=light';
+        }
+    });
+</script>
+</body>
+</html>
